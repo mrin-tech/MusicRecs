@@ -222,21 +222,18 @@ function App() {
       {/* </header>   */}
 
       {token ? 
-        <button onClick={() => {getTracks(); getTopTracks(); getTopArtists(); getRecs();}}>
-          Get Top Tracks
-        </button>
-        : 
-        <div>
-        </div>
-          
-      } 
       
       <div class='sliders'>
-        <label for="acousticness-slider">Acousticness:</label>
+        <div>
+          <button onClick={() => {getTracks(); getTopTracks(); getTopArtists(); getRecs();}} class="spotifyNewMusicBtn">
+            Get Top Tracks
+          </button>
+        </div>
+        <label for="acousticness-slider">Acousticness (Amount of electrical amplification):</label>
         {/* <input type="range" id="acousticness-slider" name="acousticness" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
 
-        <label for="dance-slider">Danceability:</label>
+        <label for="dance-slider">Danceability (tempo, rhythm and beats that determine the danceability):</label>
         {/* <input type="range" id="dance-slider" name="dance" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
@@ -256,12 +253,18 @@ function App() {
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="valence-slider">Valence:</label>
+        <label for="valence-slider">Happiness:</label>
         {/* <input type="range" id="valence-slider" name="valence" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
         <button class="spotifyNewMusicBtn">Find new music!</button>
       </div>
+      : 
+      <div>
+      </div>
+      } 
+      
+  
 
     </div>
   );
