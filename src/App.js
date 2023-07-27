@@ -2,6 +2,10 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Slider from '@mui/material/Slider'
+import DisplayTopTracks from './displayTopTracks';
+import { setToken } from './store/authSlice';
+import { clearToken } from './store/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
   const CLIENT_ID = "6fd0679bcd0246798720194c06b94911";
@@ -11,7 +15,9 @@ function App() {
   const scopes = "user-library-read user-top-read";
   const NUMSONGSLIMIT = 4;
 
-  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  // const [token, setToken] = useState("");
   useEffect(() => {
     // the hash is the url that contains the access_token and other info
     const hash = window.location.hash
@@ -20,83 +26,85 @@ function App() {
     if (token) {
       token = token.split("=")[1];
     } 
-    setToken(token)
+    dispatch(setToken(token));
+    // setToken(token)
   }, [])
 
 
   const logout = () => {
-    setToken("")
+    dispatch(clearToken());
+    // setToken("")
   } 
 
   // returns a list of the users saved tracks
-  const getTracks = async(e) => {
-    // e.preventDefault();
-    try {
-      const {data} = await axios.get("https://api.spotify.com/v1/me/tracks", {
-        params: { limit: NUMSONGSLIMIT, offset: 0 },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      })
+  // const getTracks = async(e) => {
+  //   // e.preventDefault();
+  //   try {
+  //     const {data} = await axios.get("https://api.spotify.com/v1/me/tracks", {
+  //       params: { limit: NUMSONGSLIMIT, offset: 0 },
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //     })
 
-      console.log('gettracks KEN!', data)
-      // get the id for a track
-      // console.log(data.items[0].track.id)
+  //     console.log('gettracks KEN!', data)
+  //     // get the id for a track
+  //     // console.log(data.items[0].track.id)
 
-      for (let i = 0; i < NUMSONGSLIMIT; i++) {
-        let trackId = data.items[i].track.id
-        console.log(trackId)
-        getAudioFeatures(trackId)
-        getAudioAnalysis(trackId)
-      }
+  //     for (let i = 0; i < NUMSONGSLIMIT; i++) {
+  //       let trackId = data.items[i].track.id
+  //       console.log(trackId)
+  //       getAudioFeatures(trackId)
+  //       getAudioAnalysis(trackId)
+  //     }
 
-      // test track id
-      // getAudioFeatures("11dFghVXANMlKmJXsNCbNl")
-      // getAudioAnalysis("11dFghVXANMlKmJXsNCbNl")
-    }
-    catch(error) {
-      console.error("Error retreiving user tracks; ", error);
-    }
-  }
+  //     // test track id
+  //     // getAudioFeatures("11dFghVXANMlKmJXsNCbNl")
+  //     // getAudioAnalysis("11dFghVXANMlKmJXsNCbNl")
+  //   }
+  //   catch(error) {
+  //     console.error("Error retreiving user tracks; ", error);
+  //   }
+  // }
   
   
   // audio features function
-  async function getAudioFeatures (trackID) {
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/audio-features/`+trackID, {
-          // params: { id: trackID.toString()},
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          }
-      })
-      console.log("audio features", data)
-    }
-    catch(error) {
-      console.error("Error retreiving audio features; ", error);
-    }
-  }
+  // async function getAudioFeatures (trackID) {
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/audio-features/`+trackID, {
+  //         // params: { id: trackID.toString()},
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         }
+  //     })
+  //     console.log("audio features", data)
+  //   }
+  //   catch(error) {
+  //     console.error("Error retreiving audio features; ", error);
+  //   }
+  // }
 
-  // audio analysis function
-  async function getAudioAnalysis (trackID) {
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/audio-analysis/`+trackID, {
-          // params: { id: trackID.toString()},
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          }
-      })
-      console.log("audio analysis", data)
-    }
-    catch(error) {
-      console.error("Error retreiving audio analysis; ", error);
-    }
-  }
+  // // audio analysis function
+  // async function getAudioAnalysis (trackID) {
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/audio-analysis/`+trackID, {
+  //         // params: { id: trackID.toString()},
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           Accept: "application/json",
+  //           "Content-Type": "application/json",
+  //         }
+  //     })
+  //     console.log("audio analysis", data)
+  //   }
+  //   catch(error) {
+  //     console.error("Error retreiving audio analysis; ", error);
+  //   }
+  // }
 
   async function getTrackInfo (trackID) {
     try {
@@ -136,8 +144,8 @@ function App() {
         // console.log(trackGenre)
         console.log(trackId)
         getTrackInfo(trackId)
-        getAudioFeatures(trackId)
-        getAudioAnalysis(trackId)
+        // getAudioFeatures(trackId)
+        // getAudioAnalysis(trackId)
       }
     }
     catch(error) {
@@ -145,30 +153,30 @@ function App() {
     }
   }
 
-  const getTopArtists = async(e) => {
-    // e.preventDefault();
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/me/top/artists`, {
-        params: {
-          limit: 10,
-          offset: 5,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      }) 
-      console.log("get top artists", data)
-      for (let i = 0; i < NUMSONGSLIMIT; i++) {
-        let artistGenre = data.items[i].genres
-        console.log(artistGenre)
-      }
-    }
-    catch(error) {
-      console.error("Error retreiving users top tracks; ", error);
-    }
-  }
+  // const getTopArtists = async(e) => {
+  //   // e.preventDefault();
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/me/top/artists`, {
+  //       params: {
+  //         limit: 10,
+  //         offset: 5,
+  //       },
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //     }) 
+  //     console.log("get top artists", data)
+  //     for (let i = 0; i < NUMSONGSLIMIT; i++) {
+  //       let artistGenre = data.items[i].genres
+  //       console.log(artistGenre)
+  //     }
+  //   }
+  //   catch(error) {
+  //     console.error("Error retreiving users top tracks; ", error);
+  //   }
+  // }
 
   async function getRecs () {
     try {
@@ -224,11 +232,12 @@ function App() {
       {token ? 
       
       <div class='sliders'>
-        <div>
-          <button onClick={() => {getTracks(); getTopTracks(); getTopArtists(); getRecs();}} class="spotifyNewMusicBtn">
+        {/* <div>
+          <button onClick={() => {getTopTracks(); getRecs();}} class="spotifyNewMusicBtn">
             Get Top Tracks
           </button>
-        </div>
+        </div> */}
+        <DisplayTopTracks></DisplayTopTracks>
         <label for="acousticness-slider">Acousticness (Amount of electrical amplification):</label>
         {/* <input type="range" id="acousticness-slider" name="acousticness" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
@@ -243,17 +252,17 @@ function App() {
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="energy-slider">Energy:</label>
+        <label for="energy-slider">Energy (the most energetic tracks are fast and loud):</label>
         {/* <input type="range" id="energy-slider" name="energy" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="loud-slider">Loudness:</label>
+        <label for="tempo-slider">Tempo (beats per minute):</label>
         {/* <input type="range" id="loud-slider" name="loud" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="valence-slider">Happiness:</label>
+        <label for="valence-slider">Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
         {/* <input type="range" id="valence-slider" name="valence" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
