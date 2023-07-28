@@ -4,50 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 const NUMSONGSLIMIT = 10;
-// async function getTrackInfo (trackID, token) {
-//     try {
-//       const {data} = await axios.get(`https://api.spotify.com/v1/tracks/`+trackID, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           Accept: "application/json",
-//           "Content-Type": "application/json",
-//         }
-//       })
-//       console.log("get track info for", trackID, ": \n", data)
-
-//     }
-//     catch(error) {
-//       console.error('Error retreviing this track', error)
-//     }
-//   }
-
-// const getTopTracks = async(e, token) => {
-//   // e.preventDefault();
-//   try {
-//     const {data} = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
-//       params: {
-//         limit: 10,
-//         offset: 5,
-//       },
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       }
-//     }) 
-//     console.log("get top tracks", data)
-//     for (let i = 0; i < NUMSONGSLIMIT; i++) {
-//       // let trackArtist = data.items[i].artist
-//       let trackId = data.items[i].id
-//       // console.log(trackGenre)
-//       console.log(trackId)
-//       getTrackInfo(trackId, token)
-//     }
-//   }
-//   catch(error) {
-//     console.error("Error retreiving users top tracks; ", error);
-//   }
-// }
 
 export const getTopTracks = (token) => async(dispatch) => {
   // e.preventDefault();
@@ -75,7 +31,9 @@ export const getTopTracks = (token) => async(dispatch) => {
       trackList.push(data.items[i])
 
     }
+    // setTrackList(trackList)
     return trackList
+    // dispatch({ payload: trackList });
   }
   catch(error) {
     console.error("Error retreiving users top tracks; ", error);
@@ -87,9 +45,12 @@ const DisplayTopTracks = () => {
   const token = useSelector((state) => state.auth.token);
   const [trackList, setTrackList] = useState([]);
   const handleTrackClick = (trackID) => {
-    // Handle click event for a track button
     console.log("Track ID:", trackID);
   };
+
+  const [showResults, setShowResults] = React.useState(false);
+  const onClick = () => setShowResults(true)
+
   useEffect(() => {
     if (token) {
       // dispatch(getTopTracks(token));
@@ -100,9 +61,12 @@ const DisplayTopTracks = () => {
   }, [dispatch, token]);
   return (
     <div>
-      <button onClick={() => {getTopTracks(token);}} className="spotifyNewMusicBtn">
+      <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
         Get Top Tracks
       </button>
+      {
+        showResults? 
+      
       <ul>
         {trackList?.map((track) => (
           <li key={track.id}>
@@ -111,6 +75,9 @@ const DisplayTopTracks = () => {
           </li>
         ))}
       </ul>
+      :
+      null
+      }
     </div>
 
   )
