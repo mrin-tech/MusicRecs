@@ -13,7 +13,7 @@ function App() {
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const RESPONSE_TYPE = "token";
   const scopes = "user-library-read user-top-read";
-  const NUMSONGSLIMIT = 4;
+  // const NUMSONGSLIMIT = 4;
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
@@ -106,52 +106,52 @@ function App() {
   //   }
   // }
 
-  async function getTrackInfo (trackID) {
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/tracks/`+trackID, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      })
-      console.log("get track info for", trackID, ": \n", data)
+  // async function getTrackInfo (trackID) {
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/tracks/`+trackID, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //     })
+  //     console.log("get track info for", trackID, ": \n", data)
 
-    }
-    catch(error) {
-      console.error('Error retreviing this track', error)
-    }
-  }
+  //   }
+  //   catch(error) {
+  //     console.error('Error retreviing this track', error)
+  //   }
+  // }
 
-  const getTopTracks = async(e) => {
-    // e.preventDefault();
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
-        params: {
-          limit: 10,
-          offset: 5,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      }) 
-      console.log("get top tracks", data)
-      for (let i = 0; i < NUMSONGSLIMIT; i++) {
-        // let trackArtist = data.items[i].artist
-        let trackId = data.items[i].id
-        // console.log(trackGenre)
-        console.log(trackId)
-        getTrackInfo(trackId)
-        // getAudioFeatures(trackId)
-        // getAudioAnalysis(trackId)
-      }
-    }
-    catch(error) {
-      console.error("Error retreiving users top tracks; ", error);
-    }
-  }
+  // const getTopTracks = async(e) => {
+  //   // e.preventDefault();
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
+  //       params: {
+  //         limit: 10,
+  //         offset: 5,
+  //       },
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //     }) 
+  //     console.log("get top tracks", data)
+  //     for (let i = 0; i < NUMSONGSLIMIT; i++) {
+  //       // let trackArtist = data.items[i].artist
+  //       let trackId = data.items[i].id
+  //       // console.log(trackGenre)
+  //       console.log(trackId)
+  //       getTrackInfo(trackId)
+  //       // getAudioFeatures(trackId)
+  //       // getAudioAnalysis(trackId)
+  //     }
+  //   }
+  //   catch(error) {
+  //     console.error("Error retreiving users top tracks; ", error);
+  //   }
+  // }
 
   // const getTopArtists = async(e) => {
   //   // e.preventDefault();
@@ -210,19 +210,19 @@ function App() {
         <div>
           <header className='App-header'>
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`}>
-              <div class="spotifyHeader">
+              <div className="spotifyHeader">
                 Login to Spotify 
               </div>
             </a>
           </header> 
 
-          <div class="plsLogin">
+          <div className="plsLogin">
             Find new genres and tracks based on the metrics of a song. <br></br> Please login with Spotify to use this app!
           </div>
         </div>
         : 
         <header className='App-header'>
-          <button onClick={logout} class="spotifyBtn">
+          <button onClick={logout} className="spotifyBtn">
             Logout
           </button>
         </header>  
@@ -231,42 +231,43 @@ function App() {
 
       {token ? 
       
-      <div class='sliders'>
+      <div className='sliders'>
+        dsfhjks
         {/* <div>
           <button onClick={() => {getTopTracks(); getRecs();}} class="spotifyNewMusicBtn">
             Get Top Tracks
           </button>
         </div> */}
         <DisplayTopTracks></DisplayTopTracks>
-        <label for="acousticness-slider">Acousticness (Amount of electrical amplification):</label>
+        <label >Acousticness (Amount of electrical amplification):</label>
         {/* <input type="range" id="acousticness-slider" name="acousticness" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
 
-        <label for="dance-slider">Danceability (tempo, rhythm and beats that determine the danceability):</label>
+        <label >Danceability (tempo, rhythm and beats that determine the danceability):</label>
         {/* <input type="range" id="dance-slider" name="dance" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="popular-slider">Popularity:</label>
+        <label >Popularity:</label>
         {/* <input type="range" id="popular-slider" name="popular" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="energy-slider">Energy (the most energetic tracks are fast and loud):</label>
+        <label >Energy (the most energetic tracks are fast and loud):</label>
         {/* <input type="range" id="energy-slider" name="energy" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="tempo-slider">Tempo (beats per minute):</label>
+        <label >Tempo (beats per minute):</label>
         {/* <input type="range" id="loud-slider" name="loud" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
 
-        <label for="valence-slider">Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
+        <label >Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
         {/* <input type="range" id="valence-slider" name="valence" defaultValue="50" aria-label="Default" /> */}
         <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
         
-        <button class="spotifyNewMusicBtn">Find new music!</button>
+        <button className="spotifyNewMusicBtn">Find new music!</button>
       </div>
       : 
       <div>

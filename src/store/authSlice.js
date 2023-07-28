@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     token: null,
 }
@@ -12,7 +13,7 @@ const authSlice = createSlice({
             state.token = action.payload;
         },
         clearToken: (state) => {
-            state.token = "";
+            state.token = null;
         },
     },
 })

@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 import authReducer from './authSlice';
 
 const reducer = combineReducers({
-    // add reducers here
     auth: authReducer,
 })
 
