@@ -1,7 +1,7 @@
 import './App.css';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
-import Slider from '@mui/material/Slider'
+// import axios from 'axios';
+// import Slider from '@mui/material/Slider'
 import DisplayTopTracks from './displayTopTracks';
 import { setToken } from './store/authSlice';
 import { clearToken } from './store/authSlice';
@@ -28,36 +28,40 @@ function App() {
     } 
     dispatch(setToken(token));
     // setToken(token)
-  }, [])
+  }, [dispatch, token])
 
 
   const logout = () => {
     dispatch(clearToken());
+    console.log("LOGOUT CHECK")
     // setToken("")
   } 
 
-  async function getRecs (seedTracks, acousticness, danceability, popularity, energy, tempo, happy) {
-    try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
-        params: {
-          seed_tracks: '7jPdqwZug0ovtDZsY5uK4T',
-          target_acousticness: 0.5,
-          target_danceability: 0.9,
-          target_valence: 0.99,
+  // async function getRecs (seedTracks, acousticness, danceability, popularity, energy, tempo, happy) {
+  //   try {
+  //     const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
+  //       params: {
+  //         seed_tracks: '7jPdqwZug0ovtDZsY5uK4T',
+  //         target_acousticness: 0.5,
+  //         target_danceability: 0.9,
+  //         target_popularity: 0.5,
+  //         target_energy: 0.5,
+  //         target_tempo: 0.5,
+  //         target_valence: 0.99,
 
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      })
-      console.log("get recommendations",data, data.max_acousticness)
-    }
-    catch(error) {
-      console.error('Error when retreving reccomendations', error)
-    }
-  }
+  //       },
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //     })
+  //     console.log("get recommendations",data, data.max_acousticness)
+  //   }
+  //   catch(error) {
+  //     console.error('Error when retreving reccomendations', error)
+  //   }
+  // }
 
 
   return (
@@ -90,42 +94,41 @@ function App() {
       {token ? 
       
       <div className='sliders'>
-        dsfhjks
         {/* <div>
           <button onClick={() => {getTopTracks(); getRecs();}} class="spotifyNewMusicBtn">
             Get Top Tracks
           </button>
         </div> */}
         <DisplayTopTracks></DisplayTopTracks>
-        <label >Acousticness (Amount of electrical amplification):</label>
+        {/* <label >Acousticness (Amount of electrical amplification):</label> */}
         {/* <input type="range" id="acousticness-slider" name="acousticness" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Acousticness" getAriaValueText={(e) => console.log(e)} valueLabelDisplay="auto" /> */}
 
-        <label >Danceability (tempo, rhythm and beats that determine the danceability):</label>
+        {/* <label >Danceability (tempo, rhythm and beats that determine the danceability):</label> */}
         {/* <input type="range" id="dance-slider" name="dance" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Danceability" valueLabelDisplay="auto" /> */}
         
 
-        <label >Popularity:</label>
+        {/* <label >Popularity:</label> */}
         {/* <input type="range" id="popular-slider" name="popular" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Popularity" valueLabelDisplay="auto" /> */}
         
 
-        <label >Energy (the most energetic tracks are fast and loud):</label>
+        {/* <label >Energy (the most energetic tracks are fast and loud):</label> */}
         {/* <input type="range" id="energy-slider" name="energy" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Energy" valueLabelDisplay="auto" /> */}
         
 
-        <label >Tempo (beats per minute):</label>
+        {/* <label >Tempo (beats per minute):</label> */}
         {/* <input type="range" id="loud-slider" name="loud" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Tempo" valueLabelDisplay="auto" /> */}
         
 
-        <label >Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
+        {/* <label >Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label> */}
         {/* <input type="range" id="valence-slider" name="valence" defaultValue="50" aria-label="Default" /> */}
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+        {/* <Slider defaultValue={50} aria-label="Happiness" valueLabelDisplay="auto" /> */}
         
-        <button className="spotifyNewMusicBtn">Find new music!</button>
+        {/* <button onClick={()=> {getRecs()}} className="spotifyNewMusicBtn">Find new music!</button> */}
       </div>
       : 
       <div>
