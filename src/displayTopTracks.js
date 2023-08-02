@@ -6,6 +6,9 @@ import Slider from '@mui/material/Slider';
 
 const NUMSONGSLIMIT = 15;
 
+//----------------------------------------------------------------------------------------//
+// GET TOP TRACKS
+//----------------------------------------------------------------------------------------//
 export const getTopTracks = (token) => async(dispatch) => {
   // e.preventDefault();
   try {
@@ -24,11 +27,6 @@ export const getTopTracks = (token) => async(dispatch) => {
     let trackList = []
 
     for (let i = 0; i < NUMSONGSLIMIT; i++) {
-      // let trackArtist = data.items[i].artist
-      // let trackId = data.items[i].id
-      // console.log(trackGenre)
-      // console.log(trackId)
-      // getTrackInfo(trackId)
       trackList.push(data.items[i])
 
     }
@@ -41,11 +39,15 @@ export const getTopTracks = (token) => async(dispatch) => {
   }
 }
 
+//----------------------------------------------------------------------------------------//
+// GET RECCOMENDATIONS
+//----------------------------------------------------------------------------------------//
 async function getRecs (token, seedTracks, sliderValues) {
   try {
     const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
       params: {
-        seed_tracks: '7jPdqwZug0ovtDZsY5uK4T',
+        // seed_tracks: '7jPdqwZug0ovtDZsY5uK4T',
+        seed_tracks: seedTracks,
         target_acousticness: sliderValues.acoustic,
         target_danceability: sliderValues.dance,
         target_popularity: sliderValues.popular,
@@ -70,19 +72,22 @@ async function getRecs (token, seedTracks, sliderValues) {
 
 
 const DisplayTopTracks = () => {
+  //----------------------------------------------------------------------------------------//
+  // VARIABLES AND STATES
+  //----------------------------------------------------------------------------------------//
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [trackList, setTrackList] = useState([]);
+  const [seedTracks, setSeedTracks] = useState("")
   const handleTrackClick = (trackID) => {
     console.log("Track ID:", trackID);
+    setSeedTracks(trackID)
   };
-
   const [showResults, setShowResults] = React.useState(false);
   const onClick = () => setShowResults(true)
 
   useEffect(() => {
     if (token) {
-      // dispatch(getTopTracks(token));
       dispatch(getTopTracks(token)).then((tracks) => {
         setTrackList(tracks || []); // Update the track list state
       });
@@ -104,39 +109,36 @@ const DisplayTopTracks = () => {
     }))
   };
 
-
+  // HTML
   return (
+    // Get top tracks button
     <div>
       <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
         Get Top Tracks
       </button>
       {
-        showResults? 
-      
-      <ul>
-        {trackList?.map((track) => (
-          <li key={track.id}>
-            <button onClick={() => handleTrackClick(track.id)}>{track.name} - {track.artists.map((artist) => artist.name).join(', ')}</button>
-            {/* {track.name} - {track.artists.map((artist) => artist.name).join(', ')} */}
-          </li>
-        ))}
-      </ul>
+      showResults? 
+        <ul>
+          {trackList?.map((track) => (
+            <li key={track.id}>
+              <button onClick={() => handleTrackClick(track.id)}>{track.name} - {track.artists.map((artist) => artist.name).join(', ')}</button>
+            </li>
+          ))}
+        </ul>
       :
-      null
+        null
       }
+      {/* sliders */}
       <div className='sliders'>
-      <label >Acousticness (Amount of electrical amplification):</label>
-        {/* <input type="range" id="acousticness-slider" name="acousticness" defaultValue="50" aria-label="Default" /> */}
+        <label >Acousticness (Amount of electrical amplification):</label>
         <Slider 
           defaultValue={50} 
           aria-label="Acousticness" 
-          // getAriaValueText={(e) => console.log(e)} 
           valueLabelDisplay="auto" 
           value={sliderValues.acoustic}
           onChange={handleSliderChange("acoustic")}/>
 
         <label >Danceability (tempo, rhythm and beats that determine the danceability):</label>
-        {/* <input type="range" id="dance-slider" name="dance" defaultValue="50" aria-label="Default" /> */}
         <Slider 
           defaultValue={50} 
           aria-label="Danceability" 
@@ -147,7 +149,6 @@ const DisplayTopTracks = () => {
         
 
         <label >Popularity:</label>
-        {/* <input type="range" id="popular-slider" name="popular" defaultValue="50" aria-label="Default" /> */}
         <Slider 
           defaultValue={50} 
           aria-label="Popularity" 
@@ -158,7 +159,6 @@ const DisplayTopTracks = () => {
         
 
         <label >Energy (the most energetic tracks are fast and loud):</label>
-        {/* <input type="range" id="energy-slider" name="energy" defaultValue="50" aria-label="Default" /> */}
         <Slider 
           defaultValue={50} 
           aria-label="Energy" 
@@ -169,7 +169,6 @@ const DisplayTopTracks = () => {
         
 
         <label >Tempo (beats per minute):</label>
-        {/* <input type="range" id="loud-slider" name="loud" defaultValue="50" aria-label="Default" /> */}
         <Slider 
           defaultValue={50} 
           aria-label="Tempo" 
@@ -180,7 +179,6 @@ const DisplayTopTracks = () => {
         
 
         <label >Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
-        {/* <input type="range" id="valence-slider" name="valence" defaultValue="50" aria-label="Default" /> */}
         <Slider 
           defaultValue={50} 
           aria-label="Happiness" 
@@ -189,7 +187,7 @@ const DisplayTopTracks = () => {
           onChange={handleSliderChange("valence")}
           />
         
-        <button onClick={()=> {getRecs(token, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
+        <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
       </div>
     </div>
 

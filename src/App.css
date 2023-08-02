@@ -9,6 +9,15 @@
   border-radius: 25px;
   margin: 20px;
 }
+
+.temp {
+  padding: 20px;
+  text-align: right;
+  background-color: #FF934F;
+  border-radius: 25px;
+  margin: 20px;
+}
+
 a:link { text-decoration: none; }
 
 .spotifyHeader {
@@ -42,11 +51,10 @@ a:link { text-decoration: none; }
   align-items: center;  */
   /* align-items: center; 
   position: absolute; */
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
-/* Optional: Add some spacing between the label and the slider */
 .sliders label {
   margin-right: 10px;
 }
