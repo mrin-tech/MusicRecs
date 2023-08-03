@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
 
@@ -61,6 +61,8 @@ const DisplayTopTracks = () => {
       });
     }
   }, [dispatch, token]);
+
+  
   const [sliderValues, setSliderValue] = useState({
     acoustic: 50,
     dance: 50,
@@ -77,9 +79,24 @@ const DisplayTopTracks = () => {
     }))
   };
 
+  const audioRef = useRef(null);
+  
+
   const [showRecs, setShowRecs] = useState(false);
   const [recList, setRecList] = useState([]);
-  
+
+  const [displaySpotifyInfoAboutRecs, setDisplaySpotifyInfoAboutRecs] = useState(false)
+  const [previewURL, setPreviewURL] = useState("")
+  const [externalURL, setExternalURL]  = useState("")
+
+  const handleRecClick = (trackID, trackPlayer, trackLink) => {
+    console.log("Track ID:", trackID);
+    setDisplaySpotifyInfoAboutRecs(true)
+    setPreviewURL(trackPlayer)
+    setExternalURL(trackLink)
+    console.log(previewURL)
+    // audioRef.current.play();
+  };
   //----------------------------------------------------------------------------------------//
   // GET RECCOMENDATIONS
   //----------------------------------------------------------------------------------------//
@@ -122,12 +139,15 @@ const DisplayTopTracks = () => {
       <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
         Get Top Tracks
       </button>
+      <br></br> <h4>Choose a song to generate reccomendations on!</h4>
       {
         showResults? 
           <ul style={{ listStyle: 'none' }} >
             {trackList?.map((track) => (
               <li key={track.id} >
-                <button onClick={() => handleTrackClick(track.id)} className='trackBtn'>{track.name} - {track.artists.map((artist) => artist.name).join(', ')}</button>
+                <button onClick={() => handleTrackClick(track.id)} className='trackBtn'>
+                  {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                </button>
               </li>
             ))}
           </ul>
@@ -201,8 +221,11 @@ const DisplayTopTracks = () => {
             <ul style={{ listStyle: 'none' }}>
               {recList?.map((track) => (
                 <li key={track.id}>
-                  <button onClick={() => {handleTrackClick(track.id);}}  className='trackBtn'>
-                    {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                  <button onClick={() => {handleRecClick(track.id, track.preview_url, track.external_urls.spotify);}}  className='trackBtn'>
+                    {/* <a href={track.preview_url}> */}
+                      {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                    {/* </a> */}
+                    
                   </button>
                 </li>
               ))}
@@ -210,6 +233,18 @@ const DisplayTopTracks = () => {
           :
             null
         }
+        {displaySpotifyInfoAboutRecs && (
+          <div>
+            <a href={externalURL}>Open with Spotify</a> 
+            <div>
+            <audio controls autoPlay>
+              <source ref={audioRef} src={previewURL}/>
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          </div>
+          
+        )}
       </div>
     </div>
 

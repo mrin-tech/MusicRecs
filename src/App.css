@@ -40,6 +40,11 @@ a:link { text-decoration: none; }
   border: none;
 }
 
+.spotifyBtn:active {
+  color: #073517;
+}
+
+
 .plsLogin {
   background-color: #1D7874;
   border-radius: 25px;
@@ -68,6 +73,7 @@ a:link { text-decoration: none; }
 }
 
 .spotifyNewMusicBtn {
+  
   background: #1DB954;
   color: #F1F0EA;
   font-size: 20px;
@@ -76,23 +82,39 @@ a:link { text-decoration: none; }
   border-radius: 20px;
   padding: 10px;
   margin: 10px;
-  
+  border-color: #071E22;
+  border-width: medium;
+  border-style: solid;
 }
+
+.spotifyNewMusicBtn:active {
+  background: #FFDDE2;
+  color: #071E22;
+}
+
+.spotifyNewMusicBtn:hover {background-color: red}
 
 .trackBtn {
   background-color: #AA7BC3;
   border-radius: 25px;
   padding: 5px;
   margin: 5px;
-  border: none;
   font-weight: bold;
   color: #071E22;
   font-size: 15px;
+  border-color: #071E22;
+  border-width: medium;
+  border-style: solid;
+  /* border: 10px; */
+}
 
+.trackBtn:focus {
+  background-color: #FFDDE2;
+  color: #071E22;
 }
 
 .displayBg {
-  background: #FFDDE2;
+  background: #087F8C;
   border-radius: 30px;
   margin-left: 20%;
   margin-right: 20%;
