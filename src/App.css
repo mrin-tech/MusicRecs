@@ -1,11 +1,16 @@
 .App {
   text-align: center;
+  min-height: 100vh; /* Use min-height instead of height to allow scrolling */
+  background-color: #071E22;
+  display: flex; 
+  justify-content: center; 
+  /* align-items: center;  */
 }
 
 .App-header {
   padding: 20px;
   text-align: left;
-  background-color: #FF934F;
+  background-color: #1DB954;
   border-radius: 25px;
   margin: 20px;
 }
@@ -13,7 +18,7 @@
 .temp {
   padding: 20px;
   text-align: right;
-  background-color: #FF934F;
+  background-color: #1DB954;
   border-radius: 25px;
   margin: 20px;
 }
@@ -28,7 +33,7 @@ a:link { text-decoration: none; }
 }
 
 .spotifyBtn {
-  background: #FF934F;
+  background: #1DB954;
   color: #F1F0EA;
   font-size: 30px;
   font-weight: bold;
@@ -36,13 +41,14 @@ a:link { text-decoration: none; }
 }
 
 .plsLogin {
-  background-color: #8980F5;
+  background-color: #1D7874;
   border-radius: 25px;
   margin: 20px;
   text-align: center;
-  padding: 50px 0;
+  padding: 50px;
   font-size: 25px;
   color: black;
+  font-weight: bold;
 
 }
 
@@ -53,6 +59,8 @@ a:link { text-decoration: none; }
   position: absolute; */
   margin-left: 20%;
   margin-right: 20%;
+  color: white;
+  font-weight: bold;
 }
 
 .sliders label {
@@ -60,7 +68,7 @@ a:link { text-decoration: none; }
 }
 
 .spotifyNewMusicBtn {
-  background: #FF934F;
+  background: #1DB954;
   color: #F1F0EA;
   font-size: 20px;
   font-weight: bold;

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
+// import "./displayTopTracks.css"
 
 
 const NUMSONGSLIMIT = 15;
@@ -10,7 +11,6 @@ const NUMSONGSLIMIT = 15;
 // GET TOP TRACKS
 //----------------------------------------------------------------------------------------//
 export const getTopTracks = (token) => async(dispatch) => {
-  // e.preventDefault();
   try {
     const {data} = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
       params: {
@@ -42,32 +42,34 @@ export const getTopTracks = (token) => async(dispatch) => {
 //----------------------------------------------------------------------------------------//
 // GET RECCOMENDATIONS
 //----------------------------------------------------------------------------------------//
-async function getRecs (token, seedTracks, sliderValues) {
-  try {
-    const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
-      params: {
-        // seed_tracks: '7jPdqwZug0ovtDZsY5uK4T',
-        seed_tracks: seedTracks,
-        target_acousticness: sliderValues.acoustic,
-        target_danceability: sliderValues.dance,
-        target_popularity: sliderValues.popular,
-        target_energy: sliderValues.energy,
-        target_tempo: sliderValues.tempo,
-        target_valence: sliderValues.valence,
+// async function getRecs (token, seedTracks, sliderValues) {
+//   try {
+//     const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
+//       params: {
+//         seed_tracks: seedTracks,
+//         target_acousticness: sliderValues.acoustic,
+//         target_danceability: sliderValues.dance,
+//         target_popularity: sliderValues.popular,
+//         target_energy: sliderValues.energy,
+//         target_tempo: sliderValues.tempo,
+//         target_valence: sliderValues.valence,
 
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    })
-    console.log("get recommendations",data, data.max_acousticness)
-  }
-  catch(error) {
-    console.error('Error when retreving reccomendations', error)
-  }
-}
+//       },
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       }
+//     })
+//     console.log("get recommendations",data)
+//     const recList = data.tracks
+//     setRecList(recList)
+//     setShowRecs(true)
+//   }
+//   catch(error) {
+//     console.error('Error when retreving reccomendations', error)
+//   }
+// }
 
 
 
@@ -109,6 +111,40 @@ const DisplayTopTracks = () => {
     }))
   };
 
+  const [showRecs, setShowRecs] = useState(false);
+  const [recList, setRecList] = useState([]);
+
+  async function getRecs (token, seedTracks, sliderValues) {
+  try {
+    const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
+      params: {
+        seed_tracks: seedTracks,
+        target_acousticness: sliderValues.acoustic,
+        target_danceability: sliderValues.dance,
+        target_popularity: sliderValues.popular,
+        target_energy: sliderValues.energy,
+        target_tempo: sliderValues.tempo,
+        target_valence: sliderValues.valence,
+
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    })
+    console.log("get recommendations",data)
+    const recList = data.tracks
+    setRecList(recList)
+    setShowRecs(true)
+  }
+  catch(error) {
+    console.error('Error when retreving reccomendations', error)
+  }
+}
+
+
+
   // HTML
   return (
     // Get top tracks button
@@ -117,15 +153,15 @@ const DisplayTopTracks = () => {
         Get Top Tracks
       </button>
       {
-      showResults? 
-        <ul>
-          {trackList?.map((track) => (
-            <li key={track.id}>
-              <button onClick={() => handleTrackClick(track.id)}>{track.name} - {track.artists.map((artist) => artist.name).join(', ')}</button>
-            </li>
-          ))}
-        </ul>
-      :
+        showResults? 
+          <ul style={{ listStyle: 'none' }}>
+            {trackList?.map((track) => (
+              <li key={track.id}>
+                <button onClick={() => handleTrackClick(track.id)}>{track.name} - {track.artists.map((artist) => artist.name).join(', ')}</button>
+              </li>
+            ))}
+          </ul>
+        :
         null
       }
       {/* sliders */}
@@ -136,7 +172,8 @@ const DisplayTopTracks = () => {
           aria-label="Acousticness" 
           valueLabelDisplay="auto" 
           value={sliderValues.acoustic}
-          onChange={handleSliderChange("acoustic")}/>
+          onChange={handleSliderChange("acoustic")}
+          />
 
         <label >Danceability (tempo, rhythm and beats that determine the danceability):</label>
         <Slider 
@@ -188,6 +225,20 @@ const DisplayTopTracks = () => {
           />
         
         <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
+        {
+          showRecs? 
+            <ul style={{ listStyle: 'none' }}>
+              {recList?.map((track) => (
+                <li key={track.id}>
+                  <button onClick={() => {handleTrackClick(track.id);}}>
+                    {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          :
+            null
+        }
       </div>
     </div>
 

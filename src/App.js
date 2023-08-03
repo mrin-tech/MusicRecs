@@ -32,7 +32,6 @@ function App() {
   const logout = () => {
     dispatch(clearToken());
     console.log("LOGOUT CHECK", token)
-    // setToken("")
   } 
 
   return (
