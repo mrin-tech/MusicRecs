@@ -59,7 +59,7 @@ a:link { text-decoration: none; }
   position: absolute; */
   margin-left: 20%;
   margin-right: 20%;
-  color: white;
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -76,4 +76,26 @@ a:link { text-decoration: none; }
   border-radius: 20px;
   padding: 10px;
   margin: 10px;
+  
+}
+
+.trackBtn {
+  background-color: #AA7BC3;
+  border-radius: 25px;
+  padding: 5px;
+  margin: 5px;
+  border: none;
+  font-weight: bold;
+  color: #071E22;
+  font-size: 15px;
+
+}
+
+.displayBg {
+  background: #FFDDE2;
+  border-radius: 30px;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 50px;
+  padding-bottom: 10px;
 }
