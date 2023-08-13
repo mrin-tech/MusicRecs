@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
+import AudioButton from './components/audioButton'
 
 const NUMSONGSLIMIT = 15;
 
@@ -36,8 +37,6 @@ export const getTopTracks = (token) => async(dispatch) => {
     console.error("Error retreiving users top tracks; ", error);
   }
 }
-
-
 
 const DisplayTopTracks = () => {
   //----------------------------------------------------------------------------------------//
@@ -79,24 +78,24 @@ const DisplayTopTracks = () => {
     }))
   };
 
-  const audioRef = useRef(null);
+  // const audioRef = useRef(null);
   
 
   const [showRecs, setShowRecs] = useState(false);
   const [recList, setRecList] = useState([]);
 
-  const [displaySpotifyInfoAboutRecs, setDisplaySpotifyInfoAboutRecs] = useState(false)
-  const [previewURL, setPreviewURL] = useState("")
-  const [externalURL, setExternalURL]  = useState("")
+  // const [displaySpotifyInfoAboutRecs, setDisplaySpotifyInfoAboutRecs] = useState(false)
+  // const [previewURL, setPreviewURL] = useState("")
+  // const [externalURL, setExternalURL]  = useState("")
 
-  const handleRecClick = (trackID, trackPlayer, trackLink) => {
-    console.log("Track ID:", trackID);
-    setDisplaySpotifyInfoAboutRecs(true)
-    setPreviewURL(trackPlayer)
-    setExternalURL(trackLink)
-    console.log(previewURL)
-    // audioRef.current.play();
-  };
+  // const handleRecClick = (trackID, trackPlayer, trackLink) => {
+  //   console.log("Track ID:", trackID);
+  //   setDisplaySpotifyInfoAboutRecs(true)
+  //   setPreviewURL(trackPlayer)
+  //   setExternalURL(trackLink)
+  //   console.log(previewURL)
+  //   // audioRef.current.play();
+  // };
   //----------------------------------------------------------------------------------------//
   // GET RECCOMENDATIONS
   //----------------------------------------------------------------------------------------//
@@ -128,8 +127,6 @@ const DisplayTopTracks = () => {
     console.error('Error when retreving reccomendations', error)
   }
 }
-
-
 
   // HTML
   return (
@@ -221,19 +218,27 @@ const DisplayTopTracks = () => {
             <ul style={{ listStyle: 'none' }}>
               {recList?.map((track) => (
                 <li key={track.id}>
-                  <button onClick={() => {handleRecClick(track.id, track.preview_url, track.external_urls.spotify);}}  className='trackBtn'>
+                  <AudioButton 
+                  trackName={track.name}
+                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                  previewAudioUrl={track.preview_url}
+                  externalUrl={track.external_urls.spotify}
+                  >
+
+                  </AudioButton>
+                  {/* <button onClick={() => {handleRecClick(track.id, track.preview_url, track.external_urls.spotify);}}  className='trackBtn'> */}
                     {/* <a href={track.preview_url}> */}
-                      {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                      {/* {track.name} - {track.artists.map((artist) => artist.name).join(', ')} */}
                     {/* </a> */}
                     
-                  </button>
+                  {/* </button> */}
                 </li>
               ))}
             </ul>
           :
             null
         }
-        {displaySpotifyInfoAboutRecs && (
+        {/* {displaySpotifyInfoAboutRecs && (
           <div>
             <a href={externalURL}>Open with Spotify</a> 
             <div>
@@ -244,7 +249,7 @@ const DisplayTopTracks = () => {
           </div>
           </div>
           
-        )}
+        )} */}
       </div>
     </div>
 
