@@ -1,9 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 
-const AudioButton = ({trackID, trackName, trackArtists, previewAudioUrl, externalUrl}) => {
+const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [audioInstance, setAudioInstance] = useState(null)
-    
+    console.log(trackName, previewAudioUrl)
     // const[seedAudioTracks, setSeedAudioTracks] = useState("")
 
     const handleAudioClick = () => {
@@ -13,11 +13,16 @@ const AudioButton = ({trackID, trackName, trackArtists, previewAudioUrl, externa
         }
 
         const newAudioInstance = new Audio(previewAudioUrl)
+        if (newAudioInstance == null) {
+            <p>No audio avaliable for this track.</p> 
+        }
         if (newAudioInstance) {
             if (isPlaying) {
                 newAudioInstance.pause();
             } else {
-                newAudioInstance.play();
+                newAudioInstance.play().catch(error => {
+                    console.error("Error loading audio:", error);
+                  });
             }
             setIsPlaying(!isPlaying);
             setAudioInstance(newAudioInstance)

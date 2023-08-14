@@ -146,7 +146,6 @@ const DisplayTopTracks = () => {
                   Select
                 </button>
                 <AudioButton
-                  trackID={track.id}
                   trackName={track.name}
                   trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
                   previewAudioUrl={track.preview_url}
@@ -230,7 +229,6 @@ const DisplayTopTracks = () => {
               {recList?.map((track) => (
                 <li key={track.id}>
                   <AudioButton 
-                  trackID={track.id}
                   trackName={track.name}
                   trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
                   previewAudioUrl={track.preview_url}
