@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
 import AudioButton from './components/audioButton'
 
-const NUMSONGSLIMIT = 15;
+const NUMSONGSLIMIT = 50;
+const RANDOMSONGLIMIT = 15;
 
 //----------------------------------------------------------------------------------------//
 // GET TOP TRACKS
@@ -23,15 +24,27 @@ export const getTopTracks = (token) => async(dispatch) => {
       }
     }) 
     console.log("get top tracks", data.items[1])
-    let trackList = []
+    // let trackList = []
 
-    for (let i = 0; i < NUMSONGSLIMIT; i++) {
-      trackList.push(data.items[i])
+    // for (let i = 0; i < NUMSONGSLIMIT; i++) {
+    //   trackList.push(data.items[i])
 
+    // }
+    // return trackList
+    const topTracks = data.items;
+
+    // Randomly select 10 tracks from topTracks
+    const randIndexList = [];
+    while (randIndexList.length < RANDOMSONGLIMIT) {
+      const randomIndex = Math.floor(Math.random() * topTracks.length);
+      if (!randIndexList.includes(randomIndex)) {
+        randIndexList.push(randomIndex);
+      }
     }
-    // setTrackList(trackList)
-    return trackList
-    // dispatch({ payload: trackList });
+
+    const trackList = randIndexList.map((index) => topTracks[index]);
+
+    return trackList;
   }
   catch(error) {
     console.error("Error retreiving users top tracks; ", error);
@@ -79,6 +92,13 @@ const DisplayTopTracks = () => {
   };
 
   // const audioRef = useRef(null);
+  const handleGetTopTracks = (token) => {
+    // Call the getTopTracks function to fetch new random tracks
+    dispatch(getTopTracks(token)).then((tracks) => {
+      setTrackList(tracks || []); // Update the track list state
+      setShowResults(true); // Show the results after getting new tracks
+    });
+  };
   
 
   const [showRecs, setShowRecs] = useState(false);
@@ -128,6 +148,7 @@ const DisplayTopTracks = () => {
   }
 }
 
+
   // HTML
   return (
     // Get top tracks button
@@ -135,7 +156,7 @@ const DisplayTopTracks = () => {
       <div className='row'>
       <div className='column'>
       <div className="displayBg" >
-        <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
+        <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
           Get Top Tracks
         </button>
         <br></br> <h4>Choose a song to generate reccomendations on!</h4>
@@ -177,7 +198,7 @@ const DisplayTopTracks = () => {
       {/* sliders */}
       <div className='column'>
       <div className='sliders'>
-      <h4 className="sliderHeading">Change the potential metrics of the generated songs!</h4>
+      <h4 className="sliderHeading">Modify the potential metrics of the generated songs!</h4>
         <label >Acousticness 
           <div className="slider-subtitle">Amount of electrical amplification</div>
         </label>

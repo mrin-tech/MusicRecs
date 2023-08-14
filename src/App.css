@@ -59,7 +59,7 @@ a:link { text-decoration: none; }
 
 .sliders {
   margin-left: 20px;
-  margin-right: 10%;
+  margin-right: 20px;
   color: #ffffff;
   font-weight: bold;
 }
@@ -77,8 +77,8 @@ a:link { text-decoration: none; }
 
 .spotifyNewMusicBtn {
   
-  background: #F78154;
-  color: #F1F0EA;
+  background: #B8E1FF;
+  color: #071E22;
   font-size: 20px;
   font-weight: bold;
   border: none;
@@ -95,7 +95,7 @@ a:link { text-decoration: none; }
   color: #071E22;
 }
 
-.spotifyNewMusicBtn:hover {background-color: #1DB954}
+.spotifyNewMusicBtn:hover {background-color: #F78154}
 
 .trackBtn {
   background-color: #AA7BC3;
@@ -119,7 +119,7 @@ a:link { text-decoration: none; }
 .displayBg {
   background: #087F8C;
   border-radius: 30px;
-  margin-left: 10%;
+  margin-left: 20px;
   /* margin-right: 20%; */
   margin-bottom: 50px;
   padding-bottom: 10px;
