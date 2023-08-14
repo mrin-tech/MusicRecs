@@ -142,9 +142,20 @@ const DisplayTopTracks = () => {
           <ul style={{ listStyle: 'none' }} >
             {trackList?.map((track) => (
               <li key={track.id} >
-                <button onClick={() => handleTrackClick(track.id)} className='trackBtn'>
-                  {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                <button className='trackBtn' onClick={() => handleTrackClick(track.id)} >
+                  Select
                 </button>
+                <AudioButton
+                  trackID={track.id}
+                  trackName={track.name}
+                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                  previewAudioUrl={track.preview_url}
+                  externalUrl={track.external_urls.spotify}
+                >
+                </AudioButton>
+                {/* <button onClick={() => handleTrackClick(track.id)} className='trackBtn'>
+                  {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
+                </button> */}
               </li>
             ))}
           </ul>
@@ -219,12 +230,12 @@ const DisplayTopTracks = () => {
               {recList?.map((track) => (
                 <li key={track.id}>
                   <AudioButton 
+                  trackID={track.id}
                   trackName={track.name}
                   trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
                   previewAudioUrl={track.preview_url}
                   externalUrl={track.external_urls.spotify}
                   >
-
                   </AudioButton>
                   {/* <button onClick={() => {handleRecClick(track.id, track.preview_url, track.external_urls.spotify);}}  className='trackBtn'> */}
                     {/* <a href={track.preview_url}> */}
