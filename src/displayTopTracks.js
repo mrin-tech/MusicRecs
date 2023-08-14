@@ -91,7 +91,6 @@ const DisplayTopTracks = () => {
     }))
   };
 
-  // const audioRef = useRef(null);
   const handleGetTopTracks = (token) => {
     // Call the getTopTracks function to fetch new random tracks
     dispatch(getTopTracks(token)).then((tracks) => {
@@ -104,18 +103,6 @@ const DisplayTopTracks = () => {
   const [showRecs, setShowRecs] = useState(false);
   const [recList, setRecList] = useState([]);
 
-  // const [displaySpotifyInfoAboutRecs, setDisplaySpotifyInfoAboutRecs] = useState(false)
-  // const [previewURL, setPreviewURL] = useState("")
-  // const [externalURL, setExternalURL]  = useState("")
-
-  // const handleRecClick = (trackID, trackPlayer, trackLink) => {
-  //   console.log("Track ID:", trackID);
-  //   setDisplaySpotifyInfoAboutRecs(true)
-  //   setPreviewURL(trackPlayer)
-  //   setExternalURL(trackLink)
-  //   console.log(previewURL)
-  //   // audioRef.current.play();
-  // };
   //----------------------------------------------------------------------------------------//
   // GET RECCOMENDATIONS
   //----------------------------------------------------------------------------------------//
@@ -153,40 +140,40 @@ const DisplayTopTracks = () => {
   return (
     // Get top tracks button
     <div >
+      <div className='describeTheApp'>
+      Play, Discover, Groove! 
+      <br></br>
+      Discover Spotify music based on your musical preferences!  
+      </div>
       <div className='row'>
       <div className='column'>
       <div className="displayBg" >
+        <h1 className='explainTxt'>
+          Step 1: Choose a song to generate reccomendations on!
+        </h1>
         <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
           Get Top Tracks
         </button>
-        <br></br> <h4>Choose a song to generate reccomendations on!</h4>
+        <div className='explainTxt'>
+        Click the radio button next to the track to choose song for generation, click tracks to listen!
+        </div>
         {
         showResults? 
           <ul style={{ listStyle: 'none' }} >
             {trackList?.map((track) => (
               <li key={track.id} >
-                {/* <button className='trackBtn' onClick={() => handleTrackClick(track.id)} >
-                  Select
-                </button> */}
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input type="radio" id={track.id} onClick={() => handleTrackClick(track.id)}></input>
-                <label for={track.id}>
-                <AudioButton
-                  trackName={track.name}
-                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
-                  previewAudioUrl={track.preview_url}
-                  externalUrl={track.external_urls.spotify}
-                >
-                </AudioButton>
-                </label>
+                  <input type="radio" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
+                  <label for={track.id}>
+                    <AudioButton
+                      trackName={track.name}
+                      trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                      previewAudioUrl={track.preview_url}
+                      externalUrl={track.external_urls.spotify}
+                    >
+                    </AudioButton>
+                  </label>
                 </div>
-                {/* <AudioButton
-                  trackName={track.name}
-                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
-                  previewAudioUrl={track.preview_url}
-                  externalUrl={track.external_urls.spotify}
-                >
-                </AudioButton> */}
               </li>
             ))}
           </ul>
@@ -198,7 +185,14 @@ const DisplayTopTracks = () => {
       {/* sliders */}
       <div className='column'>
       <div className='sliders'>
+      <h1 className='explainTxt'>
+          Step 2: Experiment with the sliders to determine the the style of the music!
+        </h1>
       <h4 className="sliderHeading">Modify the potential metrics of the generated songs!</h4>
+      <div className='explainTxt'>
+      For example, if you want a song with a lot of energy, move the Energy slider to the right.
+      
+      </div>
         <label >Acousticness 
           <div className="slider-subtitle">Amount of electrical amplification</div>
         </label>

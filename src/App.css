@@ -77,7 +77,7 @@ a:link { text-decoration: none; }
 
 .spotifyNewMusicBtn {
   
-  background: #B8E1FF;
+  background: #FBC2B5;
   color: #071E22;
   font-size: 20px;
   font-weight: bold;
@@ -85,15 +85,15 @@ a:link { text-decoration: none; }
   border-radius: 20px;
   padding: 10px;
   margin: 10px;
-  border-color: #071E22;
-  border-width: medium;
-  border-style: solid;
+  border-color: white;
+  /* border-width: medium;
+  border-style: solid; */
 }
 
-.spotifyNewMusicBtn:active {
+/* .spotifyNewMusicBtn:active {
   background: #FFDDE2;
   color: #071E22;
-}
+} */
 
 .spotifyNewMusicBtn:hover {background-color: #F78154}
 
@@ -126,7 +126,7 @@ a:link { text-decoration: none; }
 }
 
 .sliderHeading {
-  background: #F2C14E;
+  background: #FBC2B5;
   color: #071E22;
   font-size: 20px;
   font-weight: bold;
@@ -135,8 +135,8 @@ a:link { text-decoration: none; }
   padding: 10px;
   margin: 10px;
   border-color: #F1F0EA;
-  border-width: medium;
-  border-style: solid;  
+  border-width: none;
+  border-style: none;  
 }
 
 .row {
@@ -152,4 +152,28 @@ a:link { text-decoration: none; }
   align-content: center;
   flex-basis: 100%;
   flex: 1;
+}
+
+.explainTxt {
+  color: #B8E1FF;
+  font-weight: bold;
+  padding: 10px;
+  border-style: none;  
+  border-radius: 25px;
+  /* background-color: #B8E1FF; */
+  margin: 10px;
+  line-height: 1.0;
+}
+
+.describeTheApp {
+  color: #FBC2B5;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border-style: none;  
+  border-radius: 25px;
+  /* background-color: #B8E1FF; */
+  margin: 30px;
+  line-height: 1.0;
+  font-size: 30px;
 }
