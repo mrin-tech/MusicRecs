@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) => {
     const [isPlaying, setIsPlaying] = useState(false)
@@ -53,7 +53,7 @@ const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) =>
         <button className='trackBtn' onClick={() => {handleAudioClick(); }}>
             {isPlaying ? "Pause" : "Play"}: {trackName} - {trackArtists}
         </button>
-        <a href={externalUrl} style={{color: "#FFDDE2"}} target="_blank" rel="noreferrer">Open with Spotify</a>
+        <a href={externalUrl} style={{color: "#FFDDE2"}} target="_blank" rel="noreferrer">&#9836;</a>
     </div>
     )
 }

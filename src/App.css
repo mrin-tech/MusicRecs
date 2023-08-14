@@ -58,23 +58,26 @@ a:link { text-decoration: none; }
 }
 
 .sliders {
-  /* display: flex;
-  align-items: center;  */
-  /* align-items: center; 
-  position: absolute; */
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 20px;
+  margin-right: 10%;
   color: #ffffff;
   font-weight: bold;
 }
 
 .sliders label {
   margin-right: 10px;
+  margin-top: 6px;
+}
+
+.slider-subtitle {
+  color: #d5cece;
+  font-size: 12px;
+  margin-top: 2px;
 }
 
 .spotifyNewMusicBtn {
   
-  background: #1DB954;
+  background: #F78154;
   color: #F1F0EA;
   font-size: 20px;
   font-weight: bold;
@@ -92,7 +95,7 @@ a:link { text-decoration: none; }
   color: #071E22;
 }
 
-.spotifyNewMusicBtn:hover {background-color: red}
+.spotifyNewMusicBtn:hover {background-color: #1DB954}
 
 .trackBtn {
   background-color: #AA7BC3;
@@ -116,8 +119,37 @@ a:link { text-decoration: none; }
 .displayBg {
   background: #087F8C;
   border-radius: 30px;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 10%;
+  /* margin-right: 20%; */
   margin-bottom: 50px;
   padding-bottom: 10px;
+}
+
+.sliderHeading {
+  background: #F2C14E;
+  color: #071E22;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+  border-color: #F1F0EA;
+  border-width: medium;
+  border-style: solid;  
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-basis: 100%;
+  flex: 1;
 }

@@ -132,19 +132,24 @@ const DisplayTopTracks = () => {
   return (
     // Get top tracks button
     <div >
+      <div className='row'>
+      <div className='column'>
       <div className="displayBg" >
-      <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
-        Get Top Tracks
-      </button>
-      <br></br> <h4>Choose a song to generate reccomendations on!</h4>
-      {
+        <button onClick={() => {getTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
+          Get Top Tracks
+        </button>
+        <br></br> <h4>Choose a song to generate reccomendations on!</h4>
+        {
         showResults? 
           <ul style={{ listStyle: 'none' }} >
             {trackList?.map((track) => (
               <li key={track.id} >
-                <button className='trackBtn' onClick={() => handleTrackClick(track.id)} >
+                {/* <button className='trackBtn' onClick={() => handleTrackClick(track.id)} >
                   Select
-                </button>
+                </button> */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <input type="radio" id={track.id} onClick={() => handleTrackClick(track.id)}></input>
+                <label for={track.id}>
                 <AudioButton
                   trackName={track.name}
                   trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
@@ -152,19 +157,30 @@ const DisplayTopTracks = () => {
                   externalUrl={track.external_urls.spotify}
                 >
                 </AudioButton>
-                {/* <button onClick={() => handleTrackClick(track.id)} className='trackBtn'>
-                  {track.name} - {track.artists.map((artist) => artist.name).join(', ')}
-                </button> */}
+                </label>
+                </div>
+                {/* <AudioButton
+                  trackName={track.name}
+                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                  previewAudioUrl={track.preview_url}
+                  externalUrl={track.external_urls.spotify}
+                >
+                </AudioButton> */}
               </li>
             ))}
           </ul>
         :
         null
-      }
+        }
+      </div>
       </div>
       {/* sliders */}
+      <div className='column'>
       <div className='sliders'>
-        <label >Acousticness (Amount of electrical amplification):</label>
+      <h4 className="sliderHeading">Change the potential metrics of the generated songs!</h4>
+        <label >Acousticness 
+          <div className="slider-subtitle">Amount of electrical amplification</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Acousticness" 
@@ -173,7 +189,9 @@ const DisplayTopTracks = () => {
           onChange={handleSliderChange("acoustic")}
           />
 
-        <label >Danceability (tempo, rhythm and beats that determine the danceability):</label>
+        <label >Danceability 
+          <div className="slider-subtitle">tempo, rhythm and beats that determine the danceability</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Danceability" 
@@ -183,7 +201,9 @@ const DisplayTopTracks = () => {
           />
         
 
-        <label >Popularity:</label>
+        <label >Popularity
+        <div className="slider-subtitle">How popular the track is on Spotify</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Popularity" 
@@ -193,7 +213,9 @@ const DisplayTopTracks = () => {
           />
         
 
-        <label >Energy (the most energetic tracks are fast and loud):</label>
+        <label >Energy
+        <div className="slider-subtitle">The most energetic tracks are fast and loud</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Energy" 
@@ -203,7 +225,9 @@ const DisplayTopTracks = () => {
           />
         
 
-        <label >Tempo (beats per minute):</label>
+        <label >Tempo 
+          <div className="slider-subtitle">beats per minute</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Tempo" 
@@ -213,7 +237,9 @@ const DisplayTopTracks = () => {
           />
         
 
-        <label >Happiness (lower values sound more negative, sad and angry, while higher values sound happy and euphoric):</label>
+        <label >Happiness 
+          <div className="slider-subtitle">lower values sound more negative, sad and angry, while higher values sound happy and euphoric</div>
+        </label>
         <Slider 
           defaultValue={50} 
           aria-label="Happiness" 
@@ -221,7 +247,9 @@ const DisplayTopTracks = () => {
           value={sliderValues.valence}
           onChange={handleSliderChange("valence")}
           />
-        
+        </div>
+        </div>
+        </div>
         <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
         {
           showRecs? 
@@ -235,31 +263,13 @@ const DisplayTopTracks = () => {
                   externalUrl={track.external_urls.spotify}
                   >
                   </AudioButton>
-                  {/* <button onClick={() => {handleRecClick(track.id, track.preview_url, track.external_urls.spotify);}}  className='trackBtn'> */}
-                    {/* <a href={track.preview_url}> */}
-                      {/* {track.name} - {track.artists.map((artist) => artist.name).join(', ')} */}
-                    {/* </a> */}
-                    
-                  {/* </button> */}
                 </li>
               ))}
             </ul>
           :
             null
         }
-        {/* {displaySpotifyInfoAboutRecs && (
-          <div>
-            <a href={externalURL}>Open with Spotify</a> 
-            <div>
-            <audio controls autoPlay>
-              <source ref={audioRef} src={previewURL}/>
-              Your browser does not support the audio element.
-            </audio>
-          </div>
-          </div>
-          
-        )} */}
-      </div>
+      {/* </div> */}
     </div>
 
   )
