@@ -61,13 +61,13 @@ function App() {
       {!token ?
         /* if there is no token then display the login page */
         <div>
-          <header className='App-header'>
+          <div className='App-header'>
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`}>
               <div className="spotifyHeader">
                 Login to Spotify 
               </div>
             </a>
-          </header> 
+          </div> 
 
           <div className="plsLogin">
             Find new genres and tracks based on the metrics of a song. <br></br> Please login with Spotify to use this app!

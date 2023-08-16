@@ -10,19 +10,21 @@ const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) =>
         if (audioInstance) {
             audioInstance.pause()
             setAudioInstance(null)
+            setIsPlaying(false)
         }
 
         const newAudioInstance = new Audio(previewAudioUrl)
-        if (newAudioInstance == null) {
-            <p>No audio avaliable for this track.</p> 
-        }
         if (newAudioInstance) {
+
             if (isPlaying) {
                 newAudioInstance.pause();
+
             } else {
+                // audioInstance.pause()
+                // setAudioInstance(null)
                 newAudioInstance.play().catch(error => {
                     console.error("Error loading audio:", error);
-                  });
+                });
             }
             setIsPlaying(!isPlaying);
             setAudioInstance(newAudioInstance)
@@ -50,7 +52,7 @@ const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) =>
 
     return (
     <div>
-        <button className='trackBtn' onClick={() => {handleAudioClick(); }}>
+        <button className='trackBtn buttonRows' onClick={() => {handleAudioClick(); }}>
             {isPlaying ? "Pause" : "Play"}: {trackName} - {trackArtists}
         </button>
         <a href={externalUrl} style={{color: "#FFDDE2"}} target="_blank" rel="noreferrer">&#9836;</a>

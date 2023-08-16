@@ -101,7 +101,8 @@ const DisplayTopTracks = () => {
   
 
   const [showRecs, setShowRecs] = useState(false);
-  const [recList, setRecList] = useState([]);
+  // const [recList, setRecList] = useState([]);
+  const [recList, setRecList] = useState(new Set());
 
   //----------------------------------------------------------------------------------------//
   // GET RECCOMENDATIONS
@@ -163,7 +164,7 @@ const DisplayTopTracks = () => {
             {trackList?.map((track) => (
               <li key={track.id} >
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <input type="radio" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
+                  <input type="radio" className="radioBtn" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
                   <label for={track.id}>
                     <AudioButton
                       trackName={track.name}
@@ -205,7 +206,7 @@ const DisplayTopTracks = () => {
           />
 
         <label >Danceability 
-          <div className="slider-subtitle">tempo, rhythm and beats that determine the danceability</div>
+          <div className="slider-subtitle">Tempo, rhythm and beats determine the danceability of a song</div>
         </label>
         <Slider 
           defaultValue={50} 
@@ -244,7 +245,9 @@ const DisplayTopTracks = () => {
           <div className="slider-subtitle">beats per minute</div>
         </label>
         <Slider 
-          defaultValue={50} 
+          min={20}
+          max={300}
+          defaultValue={120} 
           aria-label="Tempo" 
           valueLabelDisplay="auto" 
           value={sliderValues.tempo}
@@ -253,7 +256,7 @@ const DisplayTopTracks = () => {
         
 
         <label >Happiness 
-          <div className="slider-subtitle">lower values sound more negative, sad and angry, while higher values sound happy and euphoric</div>
+          <div className="slider-subtitle">Lower values sound more negative, sad and angry, while higher values sound happy and euphoric</div>
         </label>
         <Slider 
           defaultValue={50} 
@@ -265,6 +268,10 @@ const DisplayTopTracks = () => {
         </div>
         </div>
         </div>
+        <div className="displayBg findNewMusic">
+        <h1 className='explainTxt'>
+          Step 3: Find new music with the playlist generated below!
+        </h1>
         <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
         {
           showRecs? 
@@ -284,6 +291,7 @@ const DisplayTopTracks = () => {
           :
             null
         }
+        </div>
       {/* </div> */}
     </div>
 

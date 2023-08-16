@@ -1,7 +1,9 @@
 .App {
   text-align: center;
   min-height: 100vh; /* Use min-height instead of height to allow scrolling */
-  background-color: #071E22;
+  /* background-color: #B07BAC; */
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(176,123,172,1) 56%);
   display: flex; 
   justify-content: center; 
   /* align-items: center;  */
@@ -10,7 +12,7 @@
 .App-header {
   padding: 20px;
   text-align: left;
-  background-color: #1DB954;
+  background-color: #442B48;
   border-radius: 25px;
   margin: 20px;
 }
@@ -18,7 +20,8 @@
 .temp {
   padding: 20px;
   text-align: right;
-  background-color: #1DB954;
+  background-color: #442B48;
+  
   border-radius: 25px;
   margin: 20px;
 }
@@ -28,31 +31,31 @@ a:link { text-decoration: none; }
 .spotifyHeader {
   font-size: 30px;
   font-weight: bold;
-  color: #F1F0EA;
+  color: #fff;
   text-decoration: none;
 }
 
 .spotifyBtn {
-  background: #1DB954;
-  color: #F1F0EA;
+  background: #442B48;
+  color: #fff;
   font-size: 30px;
   font-weight: bold;
   border: none;
 }
 
 .spotifyBtn:active {
-  color: #073517;
+  color: #B07BAC;
 }
 
 
 .plsLogin {
-  background-color: #1D7874;
+  background-color: #087F8C;
   border-radius: 25px;
   margin: 20px;
   text-align: center;
   padding: 50px;
   font-size: 25px;
-  color: black;
+  color: #B8E1FF;
   font-weight: bold;
 
 }
@@ -70,7 +73,7 @@ a:link { text-decoration: none; }
 }
 
 .slider-subtitle {
-  color: #d5cece;
+  color: #fcf8f8;
   font-size: 12px;
   margin-top: 2px;
 }
@@ -105,7 +108,7 @@ a:link { text-decoration: none; }
   font-weight: bold;
   color: #071E22;
   font-size: 15px;
-  border-color: #071E22;
+  border-color: #0F3337;
   border-width: medium;
   border-style: solid;
   /* border: 10px; */
@@ -120,6 +123,7 @@ a:link { text-decoration: none; }
   background: #087F8C;
   border-radius: 30px;
   margin-left: 20px;
+  margin-right: 20px;
   /* margin-right: 20%; */
   margin-bottom: 50px;
   padding-bottom: 10px;
@@ -144,6 +148,7 @@ a:link { text-decoration: none; }
   flex-direction: row;
   flex-wrap: wrap;
   gap: 10px;
+  
 }
 
 .column {
@@ -177,3 +182,15 @@ a:link { text-decoration: none; }
   line-height: 1.0;
   font-size: 30px;
 }
+
+.findNewMusic {
+  background-color: #360568;
+
+}
+
+.radioBtn {
+  width: 20px;
+  height: 20px;
+
+}
+
