@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Slider from '@mui/material/Slider';
+// import Slider from '@mui/material/Slider';
 import AudioButton from './components/audioButton'
+import Sliders from './components/sliders';
 
 const NUMSONGSLIMIT = 50;
 const RANDOMSONGLIMIT = 15;
@@ -114,7 +115,7 @@ const DisplayTopTracks = () => {
         seed_tracks: seedTracks,
         target_acousticness: sliderValues.acoustic,
         target_danceability: sliderValues.dance,
-        target_popularity: sliderValues.popular,
+        min_popularity: sliderValues.popular,
         target_energy: sliderValues.energy,
         target_tempo: sliderValues.tempo,
         target_valence: sliderValues.valence,
@@ -142,157 +143,78 @@ const DisplayTopTracks = () => {
     // Get top tracks button
     <div >
       <div className='describeTheApp'>
-      Play, Discover, Groove! 
-      <br></br>
-      Discover Spotify music based on your musical preferences!  
+        Play, Discover, Groove! 
+        <br></br>
+        Discover Spotify music based on your musical preferences!  
       </div>
       <div className='row'>
-      <div className='column'>
-      <div className="displayBg" >
-        <h1 className='explainTxt'>
-          Step 1: Choose a song to generate reccomendations on!
-        </h1>
-        <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
-          Get Top Tracks
-        </button>
-        <div className='explainTxt'>
-        Click the radio button next to the track to choose song for generation, click tracks to listen!
+        {/* STEP 1: TOP TRACKS */}
+        <div className='column'>
+          <div className="displayBg" >
+            <h1 className='explainTxt'>
+              Step 1: Choose a song to generate reccomendations on!
+            </h1>
+            <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
+              Get Top Tracks
+            </button>
+            <div className='explainTxt'>
+            Click the radio button next to the track to choose song for generation, click tracks to listen!
+            </div>
+            {
+            showResults? 
+              <ul style={{ listStyle: 'none' }} >
+                {trackList?.map((track) => (
+                  <li key={track.id} >
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input type="radio" className="radioBtn" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
+                      <label for={track.id}>
+                        <AudioButton
+                          trackName={track.name}
+                          trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                          previewAudioUrl={track.preview_url}
+                          externalUrl={track.external_urls.spotify}
+                        >
+                        </AudioButton>
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            :
+            null
+            }
+          </div>
         </div>
-        {
-        showResults? 
-          <ul style={{ listStyle: 'none' }} >
-            {trackList?.map((track) => (
-              <li key={track.id} >
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <input type="radio" className="radioBtn" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
-                  <label for={track.id}>
-                    <AudioButton
-                      trackName={track.name}
-                      trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
-                      previewAudioUrl={track.preview_url}
-                      externalUrl={track.external_urls.spotify}
-                    >
-                    </AudioButton>
-                  </label>
-                </div>
+        {/* STEP 2: SLIDERS */}
+        <div className='column'>
+          <Sliders sliderValues={sliderValues} handleSliderChange={handleSliderChange}></Sliders>  
+        </div>
+      </div>
+       {/* STEP 3: FIND NEW MUSIC */}
+      <div className="displayBg findNewMusic">
+      <h1 className='explainTxt'>
+        Step 3: Find new music with the playlist generated below!
+      </h1>
+      <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
+      {
+        showRecs? 
+          <ul style={{ listStyle: 'none' }}>
+            {recList?.map((track) => (
+              <li key={track.id}>
+                <AudioButton 
+                trackName={track.name}
+                trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
+                previewAudioUrl={track.preview_url}
+                externalUrl={track.external_urls.spotify}
+                >
+                </AudioButton>
               </li>
             ))}
           </ul>
         :
-        null
-        }
+          null
+      }
       </div>
-      </div>
-      {/* sliders */}
-      <div className='column'>
-      <div className='sliders'>
-      <h1 className='explainTxt'>
-          Step 2: Experiment with the sliders to determine the the style of the music!
-        </h1>
-      <h4 className="sliderHeading">Modify the potential metrics of the generated songs!</h4>
-      <div className='explainTxt'>
-      For example, if you want a song with a lot of energy, move the Energy slider to the right.
-      
-      </div>
-        <label >Acousticness 
-          <div className="slider-subtitle">Amount of electrical amplification</div>
-        </label>
-        <Slider 
-          defaultValue={50} 
-          aria-label="Acousticness" 
-          valueLabelDisplay="auto" 
-          value={sliderValues.acoustic}
-          onChange={handleSliderChange("acoustic")}
-          />
-
-        <label >Danceability 
-          <div className="slider-subtitle">Tempo, rhythm and beats determine the danceability of a song</div>
-        </label>
-        <Slider 
-          defaultValue={50} 
-          aria-label="Danceability" 
-          valueLabelDisplay="auto" 
-          value={sliderValues.dance}
-          onChange={handleSliderChange("dance")}
-          />
-        
-
-        <label >Popularity
-        <div className="slider-subtitle">How popular the track is on Spotify</div>
-        </label>
-        <Slider 
-          defaultValue={50} 
-          aria-label="Popularity" 
-          valueLabelDisplay="auto"
-          value={sliderValues.popular}
-          onChange={handleSliderChange("popular")}
-          />
-        
-
-        <label >Energy
-        <div className="slider-subtitle">The most energetic tracks are fast and loud</div>
-        </label>
-        <Slider 
-          defaultValue={50} 
-          aria-label="Energy" 
-          valueLabelDisplay="auto" 
-          value={sliderValues.energy}
-          onChange={handleSliderChange("energy")}
-          />
-        
-
-        <label >Tempo 
-          <div className="slider-subtitle">beats per minute</div>
-        </label>
-        <Slider 
-          min={20}
-          max={300}
-          defaultValue={120} 
-          aria-label="Tempo" 
-          valueLabelDisplay="auto" 
-          value={sliderValues.tempo}
-          onChange={handleSliderChange("tempo")}
-          />
-        
-
-        <label >Happiness 
-          <div className="slider-subtitle">Lower values sound more negative, sad and angry, while higher values sound happy and euphoric</div>
-        </label>
-        <Slider 
-          defaultValue={50} 
-          aria-label="Happiness" 
-          valueLabelDisplay="auto" 
-          value={sliderValues.valence}
-          onChange={handleSliderChange("valence")}
-          />
-        </div>
-        </div>
-        </div>
-        <div className="displayBg findNewMusic">
-        <h1 className='explainTxt'>
-          Step 3: Find new music with the playlist generated below!
-        </h1>
-        <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
-        {
-          showRecs? 
-            <ul style={{ listStyle: 'none' }}>
-              {recList?.map((track) => (
-                <li key={track.id}>
-                  <AudioButton 
-                  trackName={track.name}
-                  trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
-                  previewAudioUrl={track.preview_url}
-                  externalUrl={track.external_urls.spotify}
-                  >
-                  </AudioButton>
-                </li>
-              ))}
-            </ul>
-          :
-            null
-        }
-        </div>
-      {/* </div> */}
     </div>
 
   )
