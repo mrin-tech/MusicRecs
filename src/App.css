@@ -24,6 +24,9 @@
   
   border-radius: 25px;
   margin: 20px;
+  border-color: #DB7F67;
+  border-width: medium;
+  border-style: solid;
 }
 
 a:link { text-decoration: none; }
@@ -120,6 +123,9 @@ a:link { text-decoration: none; }
 }
 
 .displayBg {
+  border-color: #DB7F67;
+  border-width: medium;
+  border-style: solid;
   background: #087F8C;
   border-radius: 30px;
   margin-left: 20px;
@@ -171,6 +177,7 @@ a:link { text-decoration: none; }
 }
 
 .describeTheApp {
+  
   color: #FBC2B5;
   font-weight: bold;
   padding: 10px;
@@ -184,7 +191,10 @@ a:link { text-decoration: none; }
 }
 
 .findNewMusic {
-  background-color: #360568;
+  border-color: #DB7F67;
+  border-width: medium;
+  border-style: solid;
+  background-color: #442B48;
 
 }
 
@@ -192,5 +202,11 @@ a:link { text-decoration: none; }
   width: 20px;
   height: 20px;
 
+}
+
+.savethisplaylist {
+  font-size: 15px;
+  padding: 5px;
+  background-color: #F78154;
 }
 

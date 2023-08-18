@@ -104,38 +104,104 @@ const DisplayTopTracks = () => {
   const [showRecs, setShowRecs] = useState(false);
   // const [recList, setRecList] = useState([]);
   const [recList, setRecList] = useState(new Set());
+  const [trackURIs, setTrackURIs] = useState([])
+  
 
   //----------------------------------------------------------------------------------------//
   // GET RECCOMENDATIONS
   //----------------------------------------------------------------------------------------//
   async function getRecs (token, seedTracks, sliderValues) {
-  try {
-    const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
-      params: {
-        seed_tracks: seedTracks,
-        target_acousticness: sliderValues.acoustic,
-        target_danceability: sliderValues.dance,
-        min_popularity: sliderValues.popular,
-        target_energy: sliderValues.energy,
-        target_tempo: sliderValues.tempo,
-        target_valence: sliderValues.valence,
+    try {
+      const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
+        params: {
+          seed_tracks: seedTracks,
+          target_acousticness: sliderValues.acoustic,
+          target_danceability: sliderValues.dance,
+          min_popularity: sliderValues.popular,
+          target_energy: sliderValues.energy,
+          target_tempo: sliderValues.tempo,
+          target_valence: sliderValues.valence,
 
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    })
-    console.log("get recommendations",data)
-    const recList = data.tracks
-    setRecList(recList)
-    setShowRecs(true)
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      })
+      console.log("get recommendations",data)
+      const recList = data.tracks
+      setRecList(recList)
+      setTrackURIs(recList.map(track=> track.uri))
+      setShowRecs(true)
+    }
+    catch(error) {
+      console.error('Error when retreving reccomendations', error)
+    }
   }
-  catch(error) {
-    console.error('Error when retreving reccomendations', error)
+
+  const [userID, setUserID] = useState("")
+  async function getUserProfile (token) {
+    try {
+        const {data} = await axios.get(`https://api.spotify.com/v1/me`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        }
+    }) 
+    console.log("HELLO", data.id)
+    setUserID(data.id)
+    return data.id
+    }
+    catch (error) {
+        console.error("Error retreiving user profile; ", error);
+    }
   }
-}
+
+  async function createPlaylist(token, userID, trackURIs) {
+    try {
+      // Create a new playlist
+      const { data: playlistData } = await axios.post(
+        `https://api.spotify.com/v1/users/${userID}/playlists`,
+        {
+          name: "PLAYLIST TEST 2"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+  
+      const playlistID = playlistData.id;
+  
+      // Add tracks to the created playlist
+      const { data: addTracksData } = await axios.post(
+        `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+        {
+          uris: trackURIs
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+  
+      console.log("Playlist created and tracks added:", playlistID, addTracksData);
+    } catch (error) {
+      console.error("Error creating playlist and adding tracks", error);
+    }
+  }
+  
+
+
+
 
 
   // HTML
@@ -154,7 +220,7 @@ const DisplayTopTracks = () => {
             <h1 className='explainTxt'>
               Step 1: Choose a song to generate reccomendations on!
             </h1>
-            <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
+            <button onClick={() => {handleGetTopTracks(token); onClick(); getUserProfile(token);}} className="spotifyNewMusicBtn">
               Get Top Tracks
             </button>
             <div className='explainTxt'>
@@ -195,10 +261,21 @@ const DisplayTopTracks = () => {
       <h1 className='explainTxt'>
         Step 3: Find new music with the playlist generated below!
       </h1>
-      <button onClick={()=> {getRecs(token, seedTracks, sliderValues)}} className="spotifyNewMusicBtn">Find new music!</button>
+      <button onClick={()=> {getRecs(token, seedTracks, sliderValues);}} className="spotifyNewMusicBtn">
+        Find new music!
+      </button>
       {
         showRecs? 
-          <ul style={{ listStyle: 'none' }}>
+        <div>
+          <button 
+            className="spotifyNewMusicBtn savethisplaylist" 
+            onClick={()=> {
+              createPlaylist(token, userID, trackURIs)
+            }}
+          >
+            SAVE THIS PLAYLIST
+          </button>
+          <ul style={{ listStyle: 'none' }} >
             {recList?.map((track) => (
               <li key={track.id}>
                 <AudioButton 
@@ -211,6 +288,8 @@ const DisplayTopTracks = () => {
               </li>
             ))}
           </ul>
+          </div>
+          
         :
           null
       }
