@@ -96,7 +96,6 @@ const DisplayTopTracks = () => {
   
 
   const [showRecs, setShowRecs] = useState(false);
-  // const [recList, setRecList] = useState([]);
   const [recList, setRecList] = useState(new Set());
   const [trackURIs, setTrackURIs] = useState([])
   
@@ -134,65 +133,6 @@ const DisplayTopTracks = () => {
     }
   }
 
-  //----------------------------------------------------------------------------------------//
-  // (POST) CREATE PLAYLIST
-  //----------------------------------------------------------------------------------------//
-  async function createPlaylist(token, trackURIs) {
-    try {
-      // get user id
-      const {data: userData} = await axios.get(`https://api.spotify.com/v1/me`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        }
-      });
-      const userID = userData.id
-
-      // Create a new playlist
-      const { data: playlistData } = await axios.post(
-        `https://api.spotify.com/v1/users/${userID}/playlists`,
-        {
-          name: "Music Reccomendations For You!",
-          description: "This playlist was created with the Musical Cauldron",
-          "public": false
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-  
-      const playlistID = playlistData.id;
-  
-      // Add tracks to the created playlist
-      const { data: addTracksData } = await axios.post(
-        `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
-        {
-          uris: trackURIs
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      console.log("Playlist created and tracks added:", playlistID, addTracksData);
-    } catch (error) {
-      console.error("Error creating playlist and adding tracks", error);
-    }
-  }
-  
-
-
-
-
-
   // HTML
   return (
     // Get top tracks button
@@ -224,6 +164,8 @@ const DisplayTopTracks = () => {
                       <input type="radio" className="radioBtn" id={track.id} name="radio" onClick={() => handleTrackClick(track.id)}></input>
                       <label for={track.id}>
                         <AudioButton
+                          imgBool={false}
+                          trackImg={null}
                           trackName={track.name}
                           trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
                           previewAudioUrl={track.preview_url}
@@ -256,22 +198,15 @@ const DisplayTopTracks = () => {
       {
         showRecs? 
         <div>
-          <PostPlaylist
-          token={token}
-          trackURIs = {trackURIs}
-          ></PostPlaylist>
-          {/* <button 
-                      className="spotifyNewMusicBtn savethisplaylist" 
-                      onClick={()=> {
-                        createPlaylist(token, trackURIs)
-                      }}
-                    >
-                    SAVE THIS PLAYLIST
-                    </button> */}
-          <ul style={{ listStyle: 'none' }} >
+          <PostPlaylist token={token} trackURIs = {trackURIs} >
+          </PostPlaylist>
+          <ul className='wrapper' >
             {recList?.map((track) => (
-              <li key={track.id}>
+              <div className='items'>
+              <li key={track.id} >
                 <AudioButton 
+                imgBool={true}
+                trackImg={track.album.images[1]}
                 trackName={track.name}
                 trackArtists={track.artists.map((artist)=>artist.name).join(', ')}
                 previewAudioUrl={track.preview_url}
@@ -279,7 +214,9 @@ const DisplayTopTracks = () => {
                 >
                 </AudioButton>
               </li>
+              </div>
             ))}
+           
           </ul>
           </div>
           

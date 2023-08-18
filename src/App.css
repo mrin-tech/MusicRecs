@@ -214,3 +214,20 @@ a:link { text-decoration: none; }
   background-color:#B8E1FF;
 
 }
+
+.wrapper {
+  align-self: center;
+  list-style: none;
+}
+
+.items {
+  
+  display: inline-flex;
+  width: 200px;
+  position: relative;
+  margin: 10px 5px;
+}
+
+.toptracksWrapper {
+  width: 100px;
+}

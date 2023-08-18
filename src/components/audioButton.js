@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
-const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) => {
+const AudioButton = ({imgBool, trackImg, trackName, trackArtists, previewAudioUrl, externalUrl}) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [audioInstance, setAudioInstance] = useState(null)
     // console.log(trackName, previewAudioUrl)
     // const[seedAudioTracks, setSeedAudioTracks] = useState("")
+    console.log(trackImg)
     const pauseAudio=()=> {
         console.log("pauseaudio", isPlaying)
         // setIsPlaying(false)
@@ -21,7 +22,7 @@ const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) =>
         console.log("CLICK")
         console.log(audioInstance)
         if (isPlaying) {
-             pauseAudio()
+                pauseAudio()
         }
        
         // if audio is not playing
@@ -49,12 +50,16 @@ const AudioButton = ({trackName, trackArtists, previewAudioUrl, externalUrl}) =>
     }, [audioInstance, isPlaying]);
 
     return (
-    <div>
-        <button className='trackBtn buttonRows' onClick={handleAudioClick}>
-            {isPlaying ? "Pause": "Play"}: {trackName} - {trackArtists}
-            
-        </button>
-        <a href={externalUrl} style={{color: "#FFDDE2"}} target="_blank" rel="noreferrer">&#9836;</a>
+    <div >
+        {imgBool && <img src={trackImg.url} alt="Trulli" width="200" height="200"></img>}
+        <figcaption>
+            <button className='trackBtn' onClick={handleAudioClick}>
+                {isPlaying ? "Pause": "Play"}: {trackName} - {trackArtists}
+            </button>
+            <a href={externalUrl} style={{color: "#FFDDE2"}} target="_blank" rel="noreferrer">
+                &#9836;
+            </a>
+        </figcaption>
     </div>
     )
 }
