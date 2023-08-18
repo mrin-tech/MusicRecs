@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import Slider from '@mui/material/Slider';
 import AudioButton from './components/audioButton'
 import Sliders from './components/sliders';
+import PostPlaylist from './components/postPlaylist';
 
 const NUMSONGSLIMIT = 50;
 const RANDOMSONGLIMIT = 15;
@@ -25,13 +26,6 @@ export const getTopTracks = (token) => async(dispatch) => {
       }
     }) 
     console.log("get top tracks", data.items[1])
-    // let trackList = []
-
-    // for (let i = 0; i < NUMSONGSLIMIT; i++) {
-    //   trackList.push(data.items[i])
-
-    // }
-    // return trackList
     const topTracks = data.items;
 
     // Randomly select 10 tracks from topTracks
@@ -140,32 +134,28 @@ const DisplayTopTracks = () => {
     }
   }
 
-  const [userID, setUserID] = useState("")
-  async function getUserProfile (token) {
+  //----------------------------------------------------------------------------------------//
+  // (POST) CREATE PLAYLIST
+  //----------------------------------------------------------------------------------------//
+  async function createPlaylist(token, trackURIs) {
     try {
-        const {data} = await axios.get(`https://api.spotify.com/v1/me`, {
+      // get user id
+      const {data: userData} = await axios.get(`https://api.spotify.com/v1/me`, {
         headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
             "Content-Type": "application/json",
         }
-    }) 
-    console.log("HELLO", data.id)
-    setUserID(data.id)
-    return data.id
-    }
-    catch (error) {
-        console.error("Error retreiving user profile; ", error);
-    }
-  }
+      });
+      const userID = userData.id
 
-  async function createPlaylist(token, userID, trackURIs) {
-    try {
       // Create a new playlist
       const { data: playlistData } = await axios.post(
         `https://api.spotify.com/v1/users/${userID}/playlists`,
         {
-          name: "PLAYLIST TEST 2"
+          name: "Music Reccomendations For You!",
+          description: "This playlist was created with the Musical Cauldron",
+          "public": false
         },
         {
           headers: {
@@ -192,7 +182,6 @@ const DisplayTopTracks = () => {
           }
         }
       );
-  
       console.log("Playlist created and tracks added:", playlistID, addTracksData);
     } catch (error) {
       console.error("Error creating playlist and adding tracks", error);
@@ -220,7 +209,7 @@ const DisplayTopTracks = () => {
             <h1 className='explainTxt'>
               Step 1: Choose a song to generate reccomendations on!
             </h1>
-            <button onClick={() => {handleGetTopTracks(token); onClick(); getUserProfile(token);}} className="spotifyNewMusicBtn">
+            <button onClick={() => {handleGetTopTracks(token); onClick();}} className="spotifyNewMusicBtn">
               Get Top Tracks
             </button>
             <div className='explainTxt'>
@@ -267,14 +256,18 @@ const DisplayTopTracks = () => {
       {
         showRecs? 
         <div>
-          <button 
-            className="spotifyNewMusicBtn savethisplaylist" 
-            onClick={()=> {
-              createPlaylist(token, userID, trackURIs)
-            }}
-          >
-            SAVE THIS PLAYLIST
-          </button>
+          <PostPlaylist
+          token={token}
+          trackURIs = {trackURIs}
+          ></PostPlaylist>
+          {/* <button 
+                      className="spotifyNewMusicBtn savethisplaylist" 
+                      onClick={()=> {
+                        createPlaylist(token, trackURIs)
+                      }}
+                    >
+                    SAVE THIS PLAYLIST
+                    </button> */}
           <ul style={{ listStyle: 'none' }} >
             {recList?.map((track) => (
               <li key={track.id}>
