@@ -105,15 +105,15 @@ const DisplayTopTracks = () => {
   //----------------------------------------------------------------------------------------//
   async function getRecs (token, seedTracks, sliderValues) {
     try {
-      const {data} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
+      const {data: recData} = await axios.get(`https://api.spotify.com/v1/recommendations`, {
         params: {
           seed_tracks: seedTracks,
-          target_acousticness: sliderValues.acoustic,
-          target_danceability: sliderValues.dance,
-          min_popularity: sliderValues.popular,
-          target_energy: sliderValues.energy,
+          target_acousticness: sliderValues.acoustic/100,
+          target_danceability: sliderValues.dance/100,
+          max_popularity: sliderValues.popular,
+          target_energy: sliderValues.energy/100,
           target_tempo: sliderValues.tempo,
-          target_valence: sliderValues.valence,
+          target_valence: sliderValues.valence/100,
 
         },
         headers: {
@@ -122,11 +122,30 @@ const DisplayTopTracks = () => {
           "Content-Type": "application/json",
         }
       })
-      console.log("get recommendations",data)
-      const recList = data.tracks
+      // console.log("sliderValues", sliderValues)
+      console.log("get recommendations",recData)
+      const recList = recData.tracks
+      // console.log(recList)
       setRecList(recList)
       setTrackURIs(recList.map(track=> track.uri))
       setShowRecs(true)
+
+      // TESTING SLIDERS VALUES THAT AFFECT THE NEW MUSIC GENERATED 
+      // const audioAnalysesPromises = recList.map(async track => {
+      //   const response = await axios.get(`https://api.spotify.com/v1/audio-features/${track.id}`, {
+          
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   }
+      //   });
+      //   console.log("audio anaylsis", response.data)
+      //   return response.data;
+      // });
+
+      // console.log("audio anaylsis", audioAnalysesPromises)
+      
     }
     catch(error) {
       console.error('Error when retreving reccomendations', error)

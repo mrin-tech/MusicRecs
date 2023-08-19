@@ -5,7 +5,7 @@ const AudioButton = ({imgBool, trackImg, trackName, trackArtists, previewAudioUr
     const [audioInstance, setAudioInstance] = useState(null)
     // console.log(trackName, previewAudioUrl)
     // const[seedAudioTracks, setSeedAudioTracks] = useState("")
-    console.log(trackImg)
+    // console.log(trackImg)
     const pauseAudio=()=> {
         console.log("pauseaudio", isPlaying)
         // setIsPlaying(false)
