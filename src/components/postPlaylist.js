@@ -3,6 +3,29 @@ import React, {useState} from "react";
 
 const PostPlaylist = ({token, trackURIs}) => {
     const [externalURL, setExternalURL] = useState(null)
+    const soupList = [
+        "Tomato Soup",
+        "Chicken Noodle Soup",
+        "Minestrone Soup",
+        "Clam Chowder",
+        "Lentil Soup",
+        "Miso Soup",
+        "Pumpkin Soup",
+        "Split Pea Soup",
+        "French Onion Soup",
+        "Cream of Mushroom Soup",
+        "Broccoli Cheddar Soup",
+        "Gazpacho",
+        "Potato Leek Soup",
+        "Beef Stew",
+        "Vegetable Soup",
+        "Hot and Sour Soup",
+        "Pho",
+        "Borscht",
+        "Corn Chowder",
+        "Ramen",
+        "Tomato Rasam",
+      ];
     async function createPlaylist(token, trackURIs) {
         try {
             // get user id
@@ -19,8 +42,8 @@ const PostPlaylist = ({token, trackURIs}) => {
             const { data: playlistData } = await axios.post(
             `https://api.spotify.com/v1/users/${userID}/playlists`,
             {
-                name: "1 Music Reccomendations For You!",
-                description: "This playlist was created with the Musical Cauldron",
+                name: soupList[Math.floor(Math.random() * soupList.length)],
+                description: "This playlist was created with The Sound Soup",
                 "public": false
             },
             {
