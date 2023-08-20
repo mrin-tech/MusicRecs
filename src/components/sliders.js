@@ -38,7 +38,8 @@ const Sliders = ({ sliderValues, handleSliderChange }) => {
             <label >Popularity
             <div className="slider-subtitle">How popular the track is on Spotify</div>
             </label>
-            <Slider 
+            <Slider
+            min={5} 
             defaultValue={50} 
             aria-label="Popularity" 
             valueLabelDisplay="auto"
