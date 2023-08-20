@@ -185,6 +185,7 @@ a:link { text-decoration: none; }
   border-style: none;  
   border-radius: 25px;
   /* background-color: #B8E1FF; */
+  margin-top: 10px;
   margin: 30px;
   line-height: 1.0;
   font-size: 30px;
@@ -230,4 +231,8 @@ a:link { text-decoration: none; }
 
 .toptracksWrapper {
   width: 100px;
+}
+
+.soundsoup {
+  font-size: 40px;
 }

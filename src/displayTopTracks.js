@@ -154,96 +154,6 @@ const DisplayTopTracks = () => {
     }
   }
 
-  
-  // const [isPlaying, setIsPlaying] = useState(false)
-  //   const handleAudioToggle = (isPlayingAudio, audioInstance) => {
-  //     console.log("handleAudioToggle isPlaying",isPlaying, activeAudioInstance, audioInstance)
-  //       // if audio is playing and the active audio is not the curent audio
-  //       // then pause the current audio
-  //       if (isPlayingAudio) {
-  //           console.log("check1")
-  //           if (activeAudioInstance !== audioInstance) {
-  //               audioInstance.pause();
-  //           } else if (activeAudioInstance === audioInstance) {
-  //             setActiveAudioInstance(audioInstance);
-  //             setIsPlaying(false)
-  //           }
-  //           // setActiveAudioInstance(audioInstance);
-  //           // setIsPlaying(false)
-  //           // if is playing is not true, then 
-  //       } else if (!isPlayingAudio) {
-  //         console.log("check2")
-  //         setActiveAudioInstance(null)
-  //         // activeAudioInstance.play()
-          
-  //       }
-  //   };
-  // const [play, setPlay] = useState(false);
-  // const [pause, setPause] = useState(true);
-
-  // AHHHHH
-
-  // const handleAudioToggle = (play, pause, audioInstance) => {
-  //   console.log("///////// handleAudioToggle ///////////")
-  //   console.log("play: ", play, " pause: ", pause, " audioInstance: ", audioInstance, " activeAudioInstance: ", activeAudioInstance)
-  //   setPlay(play)
-  //   setPause(pause)
-  //   console.log("play: ", play, " pause: ", pause, " audioInstance: ", audioInstance, " activeAudioInstance: ", activeAudioInstance)
-  //   if (play) {
-  //     console.log("1")
-  //     if (activeAudioInstance !== audioInstance) {
-  //       console.log("2")
-  //       if (activeAudioInstance) {
-  //         console.log("3")
-  //         activeAudioInstance.pause();
-  //         setPause(true);
-  //       }
-  //       console.log("4")
-  //       setActiveAudioInstance(audioInstance);
-  //       activeAudioInstance.play();
-  //       setPlay(true);
-  //       setPause(false);
-  //     }
-  //   } else {
-  //     console.log("5")
-  //     setActiveAudioInstance(null);
-  //     setPlay(false);
-  //     setPause(true);
-  //   }
-  // };
-
-  // const [activeAudioInstance, setActiveAudioInstance] = useState(new Audio());
-  // const handleAudioToggle = (isPlaying, audioInstance) => {
-  //   console.log("////// handleAudioToggle ////////////////////////////////////////////")
-    
-  //   console.log("isPlaying", isPlaying, "audioInstance", audioInstance, "activeAudioInstance", activeAudioInstance)
-  //   if (activeAudioInstance) {
-  //     console.log("1")
-  //     // audioInstance.pause()
-  //     activeAudioInstance.pause();
-  //     setActiveAudioInstance(null);
-  //   }
-
-  //   if (isPlaying) {
-  //     console.log("2")
-  //     if (activeAudioInstance !== audioInstance) {
-  //       console.log("3")
-  //       if (activeAudioInstance) {
-  //         console.log("4")
-  //         activeAudioInstance.pause();
-  //       }
-  //       console.log("5")
-  //       setActiveAudioInstance(audioInstance);
-  //     }
-  //   } else {
-  //     console.log("6")
-  //     setActiveAudioInstance(null);
-  //   }
-  //   console.log("isPlaying", isPlaying, "audioInstance", audioInstance,"activeAudioInstance", activeAudioInstance)
-  //   console.log("////// END handleAudioToggle ////////////////////////////////////////////")
-
-  // }
-
   const [activeAudioInstance, setActiveAudioInstance] = useState(null);
 
   const handleAudioToggle = (audioInstance) => {
@@ -259,6 +169,9 @@ const DisplayTopTracks = () => {
     // Get top tracks button
     <div >
       <div className='describeTheApp'>
+        <div className='soundsoup'>Welcome To The Sound Soup &#127858;</div>
+        <br></br>
+        <br></br>
         Play, Discover, Groove! 
         <br></br>
         Discover Spotify music based on your musical preferences!  
