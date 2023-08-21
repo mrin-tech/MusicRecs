@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/MusicRecs/static/css/main.603ed6f6.css",
+    "main.js": "/MusicRecs/static/js/main.28b6c238.js",
+    "static/js/787.230cc8f8.chunk.js": "/MusicRecs/static/js/787.230cc8f8.chunk.js",
+    "index.html": "/MusicRecs/index.html",
+    "main.603ed6f6.css.map": "/MusicRecs/static/css/main.603ed6f6.css.map",
+    "main.28b6c238.js.map": "/MusicRecs/static/js/main.28b6c238.js.map",
+    "787.230cc8f8.chunk.js.map": "/MusicRecs/static/js/787.230cc8f8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.603ed6f6.css",
+    "static/js/main.28b6c238.js"
+  ]
+}
