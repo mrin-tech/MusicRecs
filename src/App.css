@@ -236,3 +236,24 @@ a:link { text-decoration: none; }
 .soundsoup {
   font-size: 40px;
 }
+
+.footer {
+  color: white;
+  padding: 10px;
+  position: absolute;
+  top: -5px;
+  left: 30px;
+  width: 100%;
+  text-align: left;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.purple-link {
+  color: #442B48;
+  text-decoration: none;
+}
+
+.purple-link:hover {
+  text-decoration: underline;
+}

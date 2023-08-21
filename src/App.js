@@ -65,7 +65,10 @@ function App() {
         </div>
           
       }
-  
+      <footer className="footer">
+        Created by <a href="https://github.com/mrin-tech" className="purple-link">@mrin-tech</a>. Powered by <a href="https://www.spotify.com/" className="purple-link">@Spotify</a>.
+      </footer>
+      
     </div>
   );
 }
