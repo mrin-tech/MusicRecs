@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
   const CLIENT_ID = "6fd0679bcd0246798720194c06b94911";
-  const REDIRECT_URI = 'http://localhost:3000/';
+  const REDIRECT_URI = 'https://mrin-tech.github.io/MusicRecs/';
+  // const REDIRECT_URI = 'http://localhost:3000/';
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const RESPONSE_TYPE = "token";
   const scopes = "user-library-read user-top-read playlist-modify-public playlist-modify-private";
