@@ -42,4 +42,5 @@ The app is yet to be reviewed by Spotify. Will be deployed on Gitpages.
 
 ## Contributors
 Mrinmoyee Mishra [Github](https://github.com/mrin-tech) | [LinkedIn](https://www.linkedin.com/in/mrinmoyee-mishra/) 
+
 Powered by [Spotify](https://open.spotify.com/) 
